@@ -1,0 +1,118 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 114
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++---------------------+
+| Database            |
++---------------------+
+| batch1341_db        |
+| information_schema  |
+| mysql               |
+| performance_schema  |
+| sakila              |
+| shop_db             |
+| smartmart_analytics |
+| sys                 |
+| tcs                 |
+| test                |
+| world               |
+| zaid                |
++---------------------+
+12 rows in set (0.00 sec)
+
+mysql> USE shop_db;
+Database changed
+mysql> CREATE TABLE products (product_id INT UNIQUE NOT NULL,
+    -> product_name VARCHAR(50) NOT NULL,
+    -> category VARCHAR(30) NOT NULL,
+    -> price DECIMAL(8,2) NOT NULL,
+    -> stock INT DEFAULT 0);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_shop_db |
++-------------------+
+| products          |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> DESC products;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| product_id   | int          | NO   | PRI | NULL    |       |
+| product_name | varchar(50)  | NO   |     | NULL    |       |
+| category     | varchar(30)  | NO   |     | NULL    |       |
+| price        | decimal(8,2) | NO   |     | NULL    |       |
+| stock        | int          | YES  |     | 0       |       |
++--------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO products (product_id,product_name,category,price,stock)
+    -> VALUES (1,'laptop','electronics',55000.00,15),
+    -> (2,'smartphones','electronics',25000.00,30),
+    -> (3, 'headphones','electronics',1800.00,50),
+    -> (4,'keyboard','accessories',900.00,40),
+    -> (5,'mouse','accessories',700.00,50),
+    -> (6,'monitor','electronics',12000.00,20),
+    -> (7,'printer','office',8500.00,10),
+    -> (8,'office chair','furniture',6500.00,12),
+    -> (9,'water bottle','home',350.00,80),
+    -> (10,'notebook','stationery',100.00,100);
+Query OK, 10 rows affected (0.02 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELETC * FROM products;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELETC * FROM products' at line 1
+mysql> SELECT * FROM products;
++------------+--------------+-------------+----------+-------+
+| product_id | product_name | category    | price    | stock |
++------------+--------------+-------------+----------+-------+
+|          1 | laptop       | electronics | 55000.00 |    15 |
+|          2 | smartphones  | electronics | 25000.00 |    30 |
+|          3 | headphones   | electronics |  1800.00 |    50 |
+|          4 | keyboard     | accessories |   900.00 |    40 |
+|          5 | mouse        | accessories |   700.00 |    50 |
+|          6 | monitor      | electronics | 12000.00 |    20 |
+|          7 | printer      | office      |  8500.00 |    10 |
+|          8 | office chair | furniture   |  6500.00 |    12 |
+|          9 | water bottle | home        |   350.00 |    80 |
+|         10 | notebook     | stationery  |   100.00 |   100 |
++------------+--------------+-------------+----------+-------+
+10 rows in set (0.00 sec)
+
+mysql> ^C
+mysql> UPDATE products SET pric=26000
+    -> WHERE product_id = 2;
+ERROR 1054 (42S22): Unknown column 'pric' in 'field list'
+mysql> UPDATE products SET price = 26000 WHERE product_id = 2;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM products;
++------------+--------------+-------------+----------+-------+
+| product_id | product_name | category    | price    | stock |
++------------+--------------+-------------+----------+-------+
+|          1 | laptop       | electronics | 55000.00 |    15 |
+|          2 | smartphones  | electronics | 26000.00 |    30 |
+|          3 | headphones   | electronics |  1800.00 |    50 |
+|          4 | keyboard     | accessories |   900.00 |    40 |
+|          5 | mouse        | accessories |   700.00 |    50 |
+|          6 | monitor      | electronics | 12000.00 |    20 |
+|          7 | printer      | office      |  8500.00 |    10 |
+|          8 | office chair | furniture   |  6500.00 |    12 |
+|          9 | water bottle | home        |   350.00 |    80 |
+|         10 | notebook     | stationery  |   100.00 |   100 |
++------------+--------------+-------------+----------+-------+
+10 rows in set (0.00 sec)
